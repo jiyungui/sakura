@@ -1,0 +1,140 @@
+/* ----------------------------------------------------
+   AA Phone - Base Style System (INS Minimalist)
+   严禁Emoji，纯黑白灰系统，无物理缝隙，全屏移动端适配
+---------------------------------------------------- */
+:root {
+    --bg-main: #FFFFFF;
+    --bg-subtle: #F8F9FA;
+    --bg-card: #F3F4F6;
+    --border-color: #EAEAEA;
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    
+    --text-main: #1A1A1A;
+    --text-muted: #8E8E93;
+    --text-dim: #A0A0A5;
+    
+    --dock-width: 58px;
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    height: 100dvh; /* 移动端标准动态高度，防止地址栏跳动 */
+    overflow: hidden;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-family);
+    user-select: none;
+    -webkit-user-select: none;
+    overscroll-behavior-y: none; /* 杜绝橡皮筋下拉穿透 */
+}
+
+/* 整体视口容器 */
+.aa-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    display: flex;
+    overflow: hidden;
+    background: var(--bg-main);
+    /* 针对全面屏左右上下安全区适配 */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* 主内容工作区 */
+.aa-main {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #FAFAFA; /* 底层微灰 */
+    padding-left: 68px;   /* 为左侧悬浮Dock留出呼吸感间距 */
+}
+
+.module-view {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+}
+
+.module-view.active {
+    display: flex;
+}
+
+/* 按钮基础重置 */
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-main);
+    transition: background 0.15s ease;
+}
+
+.icon-btn:active {
+    background: var(--border-color);
+}
+
+.icon-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* 占位板块视图 */
+.placeholder-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    text-align: center;
+}
+
+.placeholder-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.placeholder-name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.placeholder-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}

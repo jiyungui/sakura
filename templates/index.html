@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- iOS PWA 纯净全屏沉浸配置 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AA机">
+    <title>AA机</title>
+    
+    <!-- 模块样式隔离载入 -->
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/dock.css">
+    <link rel="stylesheet" href="/static/css/chat.css">
+</head>
+<body>
+    <div id="app" class="aa-viewport">
+        <!-- 1. 左侧竖向纤细DOCK栏 (常驻/微型) -->
+        <aside class="aa-dock" id="aaDock">
+            <div class="dock-header">
+                <button class="dock-drawer-trigger" id="dockDrawerBtn" title="展开详细菜单">
+                    <span class="dot-icon"></span>
+                </button>
+            </div>
+            
+            <nav class="dock-nav">
+                <!-- 9个板块：对话-动态-角色库-面具库-美化-钱包-收藏-购物-设置 -->
+                <button class="dock-item active" data-module="chat" title="对话">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span class="dock-label">对话</span>
+                </button>
+                <button class="dock-item" data-module="moments" title="动态">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                    <span class="dock-label">动态</span>
+                </button>
+                <button class="dock-item" data-module="characters" title="角色库">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span class="dock-label">角色</span>
+                </button>
+                <button class="dock-item" data-module="masks" title="面具库">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><path d="M2 12c0 5 4 9 10 9s10-4 10-9-4-9-10-9-10 4-10 9z"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="12" r="1.5"/></svg>
+                    <span class="dock-label">面具</span>
+                </button>
+                <button class="dock-item" data-module="aesthetic" title="美化">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.9-4.5-8.8-10-8.8z"/></svg>
+                    <span class="dock-label">美化</span>
+                </button>
+                <button class="dock-item" data-module="wallet" title="钱包">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    <span class="dock-label">钱包</span>
+                </button>
+                <button class="dock-item" data-module="favorites" title="收藏">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    <span class="dock-label">收藏</span>
+                </button>
+                <button class="dock-item" data-module="shop" title="购物">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="dock-label">购物</span>
+                </button>
+                <button class="dock-item" data-module="settings" title="设置">
+                    <svg class="dock-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span class="dock-label">设置</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- 2. 复刻参考图P1的侧滑高级抽屉面板 (可展开/可收起) -->
+        <div class="dock-drawer-mask" id="drawerMask"></div>
+        <div class="p1-drawer" id="p1Drawer">
+            <!-- 顶部情侣/伴侣双头像区域 -->
+            <div class="p1-drawer-header">
+                <div class="couple-avatars">
+                    <div class="c-avatar ava-1"></div>
+                    <div class="c-avatar ava-2"></div>
+                </div>
+                <div class="couple-meta">
+                    <div class="couple-name">revel & enyou</div>
+                    <div class="couple-days">在一起的第 520 天</div>
+                </div>
+                <button class="drawer-close" id="drawerCloseBtn">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <!-- 抽屉菜单列表 -->
+            <div class="p1-drawer-content">
+                <!-- 分组 1: Messages & Chat -->
+                <div class="drawer-section">
+                    <div class="sec-title">
+                        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        <span>Messages & Chat</span>
+                    </div>
+                    <ul class="sub-link-list">
+                        <li class="sub-link active"><span class="dot"></span>窗口 1 · 恩幼专属会话</li>
+                        <li class="sub-link"><span class="dot"></span>窗口 2 · 备用多线流</li>
+                        <li class="add-link">+ 新增窗口</li>
+                    </ul>
+                </div>
+
+                <!-- 分组 2: Listen Together -->
+                <div class="drawer-section">
+                    <div class="sec-title">
+                        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                        <span>Listen Together</span>
+                    </div>
+                    <ul class="sub-link-list">
+                        <li class="sub-link"><span class="dot"></span>主播放室 · 有我呢</li>
+                        <li class="sub-link"><span class="dot"></span>晚安电台 · 专属音频</li>
+                        <li class="add-link">+ 新增窗口</li>
+                    </ul>
+                </div>
+
+                <!-- 分组 3: Puppy Wallet -->
+                <div class="drawer-section">
+                    <div class="sec-title">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        <span>Puppy Wallet</span>
+                    </div>
+                    <ul class="sub-link-list">
+                        <li class="sub-link"><span class="dot"></span>账单明细流水</li>
+                        <li class="sub-link"><span class="dot"></span>审批条专区</li>
+                        <li class="add-link">+ 新增窗口</li>
+                    </ul>
+                </div>
+
+                <!-- 底部自定义 -->
+                <div class="drawer-footer-action">
+                    <button class="custom-app-btn">+ 新增自定义应用</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 主视口区 (右侧主板) -->
+        <main class="aa-main">
+            <!-- 模块 1：CHAT 对话主板 -->
+            <section class="module-view active" id="module-chat">
+                
+                <!-- 聊天列表视图 (内含吸顶顶栏 + P1组件 + 搜索 + 角色按键 + 列表流) -->
+                <div class="chat-list-view" id="chatListView">
+                    
+                                    <!-- 1. 最顶部全局顶栏 (INS 杂志级排版 & 极简状态徽章) -->
+                    <header class="chat-header">
+                        <div class="header-main">
+                            <div class="header-title-row">
+                                <h1 class="header-title">MESSAGES</h1>
+                                <span class="header-sub-tag">对话空间</span>
+                            </div>
+                            <span class="header-desc">Complete quiet & conversation</span>
+                        </div>
+                        <div class="header-badge">
+                            <span class="badge-dot"></span>
+                            <span class="badge-text">3 CHATS</span>
+                        </div>
+                    </header>
+
+                    <!-- 2. P1 个人主页小组件 (已去掉Banner上的Npcs) -->
+                    <div class="profile-widget" id="profileWidget">
+                        <div class="pw-banner-box" id="bannerBox" title="点击更换Banner图片">
+                            <div class="pw-banner-inner" id="bannerImg"></div>
+                            <div class="pw-banner-overlay"></div>
+                            <input type="file" id="bannerInput" accept="image/*" style="display: none;">
+                        </div>
+
+                        <div class="pw-action-row">
+                            <div class="pw-avatar-wrap" id="avatarBox" title="点击更换头像">
+                                <div class="pw-avatar-inner" id="avatarImg"></div>
+                                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                            </div>
+
+                            <div class="pw-buttons">
+                                <button class="pw-btn pw-btn-edit" id="editProfileBtn">Edit</button>
+                                <button class="pw-btn pw-btn-follow" id="followProfileBtn">Follow</button>
+                            </div>
+                        </div>
+
+                                             <div class="pw-info-area">
+                            <h2 class="pw-name" id="pwName">Sakura</h2>
+                            <div class="pw-handle" id="pwHandle">@Sakura003</div>
+                            <p class="pw-bio" id="pwBio">Complete loneliness means waking up</p>
+                            <div class="pw-stats">
+                                <span class="pw-stat-item"><strong id="pwFollowers">13.14K</strong> Followers</span>
+                                <span class="pw-stat-item"><strong id="pwPosts">10</strong> Posts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 圆润胶囊搜索栏 -->
+                    <div class="chat-search-bar">
+                        <div class="search-box capsule-search">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="chatSearchInput" placeholder="检索会话、窗口或内容..." spellcheck="false">
+                        </div>
+                    </div>
+
+                    <!-- 4. ★ 新增：搜索框下方「新增角色」高质感胶囊按键 -->
+                    <div class="add-character-wrap">
+                        <button class="add-character-btn" id="addCharacterBtn">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            <span>新增角色</span>
+                        </button>
+                    </div>
+
+                    <!-- 5. 聊天列表动态流 (滚动容器) -->
+                    <div class="chat-items-scroll" id="chatListContainer">
+                        <!-- 动态渲染 -->
+                    </div>
+                </div>
+
+                <!-- 单个聊天对话视图 (横滑进入/滑出) -->
+                <div class="chat-room-view" id="chatRoomView">
+                    <header class="room-header">
+                        <button class="icon-btn back-btn" id="roomBackBtn">
+                            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                        </button>
+                        <div class="room-meta">
+                            <h2 class="room-title" id="roomTitle">revel & enyou</h2>
+                            <span class="room-status" id="roomSubtitle">在线 · 第 520 天</span>
+                        </div>
+                        <button class="icon-btn room-more-btn">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                        </button>
+                    </header>
+
+                    <!-- 聊天气泡滚动区 -->
+                    <div class="room-messages-scroll" id="roomMessages">
+                        <!-- 动态渲染消息 -->
+                    </div>
+
+                    <!-- 底部输入框 -->
+                    <footer class="room-footer">
+                        <div class="input-container">
+                            <input type="text" id="chatInput" placeholder="输入消息..." autocomplete="off">
+                            <button class="send-btn" id="sendBtn">
+                                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+
+            <!-- 其它8个板块的通用占位 -->
+            <section class="module-view" id="module-placeholder">
+                <div class="placeholder-content">
+                    <span class="placeholder-tag" id="placeholderTag">MODULE</span>
+                    <h2 class="placeholder-name" id="placeholderName">板块开发中</h2>
+                    <p class="placeholder-desc">AA机极简模块架构已就绪，等待注入业务实现。</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- 资料编辑模态弹窗 (已去掉横幅文字编辑项) -->
+        <div class="profile-modal-mask" id="profileModalMask">
+            <div class="profile-modal">
+                <div class="modal-header">
+                    <span>编辑主页信息</span>
+                    <button class="modal-close-btn" id="modalCloseBtn">✕</button>
+                </div>
+                <div class="modal-body">
+                    <label>昵称</label>
+                    <input type="text" id="editInputName" maxlength="30">
+                    <label>账号 Handle</label>
+                    <input type="text" id="editInputHandle" maxlength="30">
+                    <label>个签文案</label>
+                    <textarea id="editInputBio" rows="3" maxlength="150"></textarea>
+                    <div class="modal-row-2">
+                        <div>
+                            <label>Followers</label>
+                            <input type="text" id="editInputFollowers" maxlength="15">
+                        </div>
+                        <div>
+                            <label>Posts</label>
+                            <input type="text" id="editInputPosts" maxlength="15">
+                        </div>
+                    </div>
+                </div>
+                             <div class="modal-footer">
+                    <button class="modal-save-btn" id="modalSaveBtn">保存更改</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ★ 新增：Banner 图片位置调节弹窗 -->
+        <div class="crop-modal-mask" id="bannerCropModalMask">
+            <div class="crop-modal">
+                <div class="modal-header">
+                    <span>调整背景显示区域</span>
+                    <button class="modal-close-btn" id="cropCloseBtn">✕</button>
+                </div>
+                
+                <!-- 实时预览框 (与组件Banner等比例) -->
+                <div class="crop-preview-box">
+                    <div class="crop-preview-img" id="cropPreviewImg"></div>
+                </div>
+
+                <div class="crop-controls">
+                    <div class="crop-slider-row">
+                        <span>垂直位置 (Y)</span>
+                        <input type="range" id="bannerPosY" min="0" max="100" value="50">
+                    </div>
+                    <div class="crop-slider-row">
+                        <span>水平位置 (X)</span>
+                        <input type="range" id="bannerPosX" min="0" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="modal-save-btn" id="saveBannerCropBtn">确认并应用</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模块脚本分块载入 -->
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>
