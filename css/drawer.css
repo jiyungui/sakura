@@ -1,0 +1,320 @@
+/* =========================================================
+   SakuraTvT · 抽屉目录栏 & 自由拖动悬浮窗样式
+   ========================================================= */
+
+/* 1. 全新浅灰可自由拖动正圆悬浮按钮 (Light Gray Draggable Circular FAB) */
+.draggable-fab {
+  position: absolute;
+  right: 18px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 36px);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(244, 245, 247, 0.88);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  color: #4B5563;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;           /* 彻底阻止浏览器默认滚动/下拉刷新手势 */
+  -webkit-touch-callout: none;  /* 禁用 iOS 长按弹出菜单 */
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 800;
+  transition: box-shadow 0.2s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.draggable-fab:active {
+  cursor: grabbing;
+  background: #E5E7EB;
+  transform: scale(0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.draggable-fab svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.draggable-fab svg circle {
+  fill: #4B5563 !important; /* 确保浅灰底上的三点为深灰实心点 */
+  stroke: none !important;
+}
+
+/* 2. 抽屉全屏遮罩 */
+.drawer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 900;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.28s;
+}
+
+.drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 3. 左侧滑出目录抽屉面板 */
+.drawer-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 78%;
+  max-width: 320px;
+  height: 100%;
+  background: #FFFFFF;
+  z-index: 950;
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 8px 0 32px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.drawer-sidebar.active {
+  transform: translateX(0);
+}
+
+/* 抽屉顶部头部 */
+.drawer-header {
+  padding: 18px 16px 14px 16px;
+  border-bottom: 1px solid #F3F4F6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-couple-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-avatars {
+  display: flex;
+  position: relative;
+  width: 44px;
+  height: 28px;
+}
+
+.avatar-bubble {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #E5E7EB;
+  border: 1.5px solid #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #4B5563;
+  position: absolute;
+  top: 0;
+}
+
+.avatar-bubble.av-left {
+  left: 0;
+  z-index: 1;
+}
+
+.avatar-bubble.av-right {
+  left: 16px;
+  z-index: 2;
+}
+
+.couple-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.couple-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.2px;
+}
+
+.couple-days {
+  font-size: 10px;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.btn-drawer-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F3F4F6;
+  border: none;
+  color: #6B7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-drawer-close:active {
+  background: #E5E7EB;
+  color: #111827;
+}
+
+.btn-drawer-close svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+}
+
+/* 抽屉 14 大 APP 手风琴列表 */
+.drawer-app-list {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 10px 24px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drawer-app-item {
+  border-radius: 10px;
+  transition: background-color 0.15s ease;
+  overflow: hidden;
+}
+
+/* APP 标题行 */
+.drawer-app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.drawer-app-header:active {
+  background: #F4F5F7;
+}
+
+.drawer-app-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-app-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1F2937;
+}
+
+.drawer-app-icon svg {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none !important;
+}
+
+.drawer-app-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1F2937;
+  letter-spacing: -0.2px;
+}
+
+/* 展开箭头指示器 */
+.drawer-chevron {
+  width: 14px;
+  height: 14px;
+  color: #9CA3AF;
+  transition: transform 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-chevron svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none !important;
+}
+
+.drawer-app-item.expanded .drawer-chevron {
+  transform: rotate(90deg);
+  color: #111827;
+}
+
+.drawer-app-item.expanded > .drawer-app-header {
+  background: #F9FAFB;
+}
+
+/* 子功能折叠菜单 */
+.drawer-sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #FAFAFB;
+  border-radius: 0 0 10px 10px;
+}
+
+.drawer-app-item.expanded .drawer-sub-menu {
+  max-height: 480px;
+  padding: 4px 0 8px 0;
+}
+
+/* 子功能链接项 */
+.drawer-sub-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 34px;
+  font-size: 12px;
+  color: #4B5563;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 1px 6px;
+  transition: all 0.15s ease;
+}
+
+.drawer-sub-item:active {
+  background: #EEF0F2;
+  color: #111827;
+  font-weight: 600;
+}
+
+.sub-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #9CA3AF;
+  transition: background 0.15s ease;
+}
+
+.drawer-sub-item:active .sub-dot {
+  background: #111827;
+}

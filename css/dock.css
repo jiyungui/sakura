@@ -1,0 +1,111 @@
+/* ============================================================
+   SakuraTvT - 页面绝对悬浮 Dock 栏 (Top-Aligned Floating Island)
+   ============================================================ */
+.floating-dock {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 14px); /* 靠上对齐，避开刘海/安全区 */
+  left: 12px;
+  width: 52px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0 12px 0;
+  z-index: 500;
+  user-select: none;
+  
+  /* 精致 INS 悬浮多层柔和阴影 */
+  box-shadow: 
+    0 12px 32px -4px rgba(0, 0, 0, 0.08),
+    0 4px 12px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+/* 顶部 Logo 标识 (TvT) */
+.dock-top-brand {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #111827;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* 垂直紧凑导航列表 */
+.dock-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  align-items: center;
+}
+
+/* 单个图标按钮 */
+.dock-item {
+  width: 42px;
+  height: 42px;
+  background: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 14px;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  padding: 0;
+}
+
+.dock-item:active {
+  transform: scale(0.92);
+}
+
+/* 核心修复：彻底清除 SVG 黑色填充，强制镂空线框 */
+.dock-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none !important;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.dock-item svg * {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+
+.dock-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 1;
+}
+
+/* 激活态：高质感深黑底色小药丸 */
+.dock-item.active {
+  background: #111827;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dock-item.active svg {
+  stroke: #FFFFFF !important;
+  stroke-width: 2;
+}
+
+.dock-item.active .dock-label {
+  color: #FFFFFF;
+  font-weight: 700;
+}

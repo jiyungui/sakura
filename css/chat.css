@@ -1,0 +1,315 @@
+/* ============================================================
+   SakuraTvT - Chat 对话流与高质感 INS 顶栏
+   ============================================================ */
+.chat-main-header {
+  padding: 14px 18px 8px 72px; /* 左侧避让悬浮 Dock */
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.chat-header-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat-meta-subtitle {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #9CA3AF;
+  text-transform: uppercase;
+}
+
+.chat-meta-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-title-text {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #111827;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.chat-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.chat-header-badge {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #4B5563;
+}
+
+/* 搜索框 */
+.chat-search-container {
+  padding: 6px 18px 10px 72px; /* 左侧避让悬浮 Dock */
+}
+
+.chat-search-bar {
+  display: flex;
+  align-items: center;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  padding: 7px 12px;
+  gap: 8px;
+}
+
+.chat-search-bar svg {
+  width: 14px;
+  height: 14px;
+  stroke: #9CA3AF;
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.chat-search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 12px;
+  color: #1F2937;
+  width: 100%;
+}
+
+.chat-search-bar input::placeholder {
+  color: #9CA3AF;
+}
+
+/* ============================================================
+   P1 小组件完整高质感卡片
+   ============================================================ */
+.widget-p1-card {
+  margin: 4px 18px 12px 72px; /* 左侧避让悬浮 Dock */
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 12px 12px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.widget-p1-top {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.widget-p1-cover-box {
+  width: 110px;
+  height: 82px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background-color: #E5E7EB;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.widget-p1-cover-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #D1D5DB 0%, #E5E7EB 100%);
+}
+
+.widget-p1-time-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.widget-p1-quote-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.quote-jp-text {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.35;
+  outline: none;
+  word-break: break-word;
+}
+
+.quote-trans-tag {
+  font-size: 10.5px;
+  color: #2563EB;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  margin: 2px 0;
+}
+
+.quote-cn-text {
+  font-size: 11px;
+  color: #4B5563;
+  line-height: 1.35;
+  outline: none;
+  word-break: break-word;
+  border-left: 2px solid #111827;
+  padding-left: 6px;
+}
+
+/* 操作微图标栏 (严防 SVG 畸形黑化) */
+.widget-action-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  color: #9CA3AF;
+}
+
+.w-icon {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.w-icon svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none !important;
+}
+
+.w-icon.w-heart {
+  margin-left: auto;
+}
+
+/* 三日时间轴部分 */
+.widget-p1-bottom {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #E5E7EB;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.timeline-year-month {
+  font-size: 12px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.timeline-weather-box {
+  display: flex;
+  gap: 6px;
+  font-size: 9px;
+  color: #9CA3AF;
+}
+
+.timeline-tri-days {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.day-row {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.day-row.past, .day-row.future {
+  color: #9CA3AF;
+}
+
+.day-row.current {
+  background: #F3F4F6;
+  color: #111827;
+  font-weight: 700;
+}
+
+.day-num {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  width: 20px;
+}
+
+.day-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  margin: 0 8px;
+}
+
+.day-desc {
+  letter-spacing: 0.2px;
+}
+
+/* 添加角色聊天胶囊按键 */
+.btn-add-character-capsule {
+  margin: 4px 18px 20px 72px; /* 左侧避让悬浮 Dock */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 90px);
+  padding: 9px;
+  border-radius: 12px;
+  border: 1px dashed #CBD5E1;
+  background: #FAFAFB;
+  color: #4B5563;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-add-character-capsule:active {
+  background: #F3F4F6;
+  color: #111827;
+  transform: scale(0.98);
+}
+
+.btn-add-character-capsule svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}

@@ -1,16 +1,16 @@
 {
-  "name": "SakuraTVT",
-  "short_name": "SakuraTVT",
-  "start_url": "/",
+  "name": "SakuraTvT",
+  "short_name": "SakuraTvT",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/static/img/icon.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ]
 }

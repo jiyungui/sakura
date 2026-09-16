@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>SakuraTvT</title>
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/dock.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/drawer.css">
+</head>
+<body>
+
+  <!-- SakuraTvT 主容器 -->
+  <div class="sakura-container" id="sakuraContainer">
+
+       <!-- 1. 左侧靠上绝对悬浮毛玻璃胶囊 Dock 岛 (9大核心板块) -->
+    <aside class="floating-dock" id="floatingDock">
+      <div class="dock-top-brand">TvT</div>
+      <div class="dock-nav-list">
+        
+        <!-- 对话 -->
+        <button class="dock-item active" data-tab="chat">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span class="dock-label">对话</span>
+        </button>
+
+        <!-- 动态 -->
+        <button class="dock-item" data-tab="feed">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span class="dock-label">动态</span>
+        </button>
+
+        <!-- 角色库 -->
+        <button class="dock-item" data-tab="chars">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="dock-label">角色库</span>
+        </button>
+
+        <!-- 面具库 -->
+        <button class="dock-item" data-tab="masks">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <span class="dock-label">面具库</span>
+        </button>
+
+        <!-- 美化 -->
+        <button class="dock-item" data-tab="themes">
+          <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          <span class="dock-label">美化</span>
+        </button>
+
+        <!-- 钱包 -->
+        <button class="dock-item" data-tab="wallet">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span class="dock-label">钱包</span>
+        </button>
+
+        <!-- 收藏 -->
+        <button class="dock-item" data-tab="favorites">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="dock-label">收藏</span>
+        </button>
+
+        <!-- 购物 -->
+        <button class="dock-item" data-tab="shop">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="dock-label">购物</span>
+        </button>
+
+        <!-- 设置 -->
+        <button class="dock-item" data-tab="chat-settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="dock-label">设置</span>
+        </button>
+
+      </div>
+    </aside>
+
+    <!-- 2. 主内容展示区域 -->
+    <main class="main-content-flow" id="mainContentFlow">
+      
+      <!-- 对话主视图 (Chat Tab) -->
+      <section class="tab-view active" id="view-chat">
+        <!-- 顶栏 (CHAT WORLD · 01) -->
+        <header class="chat-main-header">
+          <div class="chat-header-meta">
+            <span class="chat-meta-subtitle">CHAT WORLD · 01</span>
+            <div class="chat-meta-title-row">
+              <h1 class="chat-title-text">对话</h1>
+              <span class="chat-status-dot"></span>
+            </div>
+          </div>
+          <div class="chat-header-badge">SakuraOS</div>
+        </header>
+
+        <!-- 搜索框 -->
+        <div class="chat-search-container">
+          <div class="chat-search-bar">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search dialogs, characters..." readonly>
+          </div>
+        </div>
+
+        <!-- P1 主页小组件卡片 -->
+        <div class="widget-p1-card">
+          <div class="widget-p1-top">
+            <div class="widget-p1-cover-box" id="widgetCoverBox">
+              <div class="widget-p1-cover-bg" id="widgetCoverBg"></div>
+              <div class="widget-p1-time-badge" id="widgetTimeBadge">13:14:00</div>
+              <input type="file" id="coverFileInput" accept="image/*" style="display:none;">
+            </div>
+            <div class="widget-p1-quote-box">
+              <div class="quote-jp-text" id="quoteJpText" contenteditable="true" spellcheck="false">
+                愛は、抱き合う二つの透明な心臓だ。
+              </div>
+              <div class="quote-trans-tag" id="btnTranslateQuote">翻訳中文</div>
+              <div class="quote-cn-text" id="quoteCnText" contenteditable="true" spellcheck="false">
+                爱是两颗相拥的透明心脏。
+              </div>
+              <div class="widget-action-icons">
+                <span class="w-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+                <span class="w-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+                <span class="w-icon"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
+                <span class="w-icon"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+                <span class="w-icon w-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="widget-p1-bottom">
+            <div class="timeline-header">
+              <div class="timeline-year-month" id="timelineYearMonth">2026年3月</div>
+              <div class="timeline-weather-box">
+                <span class="lunar-text" id="lunarText">二月初七</span>
+                <span class="weather-text" id="weatherText">Weather in London 12° 局部多云</span>
+              </div>
+            </div>
+            <div class="timeline-tri-days">
+              <div class="day-row past">
+                <span class="day-num">24</span>
+                <span class="day-dot"></span>
+                <span class="day-desc">昨天 周二 初六</span>
+              </div>
+              <div class="day-row current">
+                <span class="day-num">25</span>
+                <span class="day-dot"></span>
+                <span class="day-desc">今天 周三 初七</span>
+              </div>
+              <div class="day-row future">
+                <span class="day-num">26</span>
+                <span class="day-dot"></span>
+                <span class="day-desc">明天 周四 初八</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 添加角色聊天胶囊按键 -->
+        <button class="btn-add-character-capsule" id="btnAddCharacter">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>添加角色聊天</span>
+        </button>
+
+        <div class="chat-dialog-list-container" id="chatDialogListContainer"></div>
+      </section>
+
+      <!-- 其他 8 个 Dock 板块的占位视图 -->
+      <section class="tab-view" id="view-feed"><div class="empty-view-box"><h2>动态圈</h2></div></section>
+      <section class="tab-view" id="view-chars"><div class="empty-view-box"><h2>角色库</h2></div></section>
+      <section class="tab-view" id="view-masks"><div class="empty-view-box"><h2>面具库</h2></div></section>
+      <section class="tab-view" id="view-themes"><div class="empty-view-box"><h2>美化中心</h2></div></section>
+      <section class="tab-view" id="view-wallet"><div class="empty-view-box"><h2>数字钱包</h2></div></section>
+      <section class="tab-view" id="view-favorites"><div class="empty-view-box"><h2>我的收藏</h2></div></section>
+      <section class="tab-view" id="view-shop"><div class="empty-view-box"><h2>潮品购物</h2></div></section>
+      <section class="tab-view" id="view-chat-settings"><div class="empty-view-box"><h2>Chat 专属设置</h2></div></section>
+    </main>
+
+    <!-- 3. 精致可自由拖动正圆悬浮按钮 (Draggable FAB) -->
+    <div class="draggable-fab" id="draggableFab">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="2"/>
+        <circle cx="12" cy="5" r="2"/>
+        <circle cx="12" cy="19" r="2"/>
+      </svg>
+    </div>
+
+    <!-- 4. 抽屉遮罩与侧滑菜单面板 (14大核心 APP 手风琴模式) -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer-sidebar" id="drawerSidebar">
+      
+      <!-- 抽屉头部 -->
+      <div class="drawer-header">
+        <div class="drawer-couple-info">
+          <div class="drawer-avatars">
+            <div class="avatar-bubble av-left">SK</div>
+            <div class="avatar-bubble av-right">EY</div>
+          </div>
+          <div class="couple-text-group">
+            <span class="couple-title">revel & enyou</span>
+            <span class="couple-days">在一起的第 520 天</span>
+          </div>
+        </div>
+        <button class="btn-drawer-close" id="btnDrawerClose">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- 14 个核心 APP 手风琴折叠列表 (完全去除所有新增窗口) -->
+      <div class="drawer-app-list" id="drawerAppList">
+        
+        <!-- 1. Messages & Chat (子项精确映射 Dock 栏 9 大核心功能) -->
+        <div class="drawer-app-item expanded" data-app="chat">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              </span>
+              <span class="drawer-app-name">Messages & Chat</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item" data-dock-tab="chat"><span class="sub-dot"></span><span>AA 专属主页 / 对话</span></div>
+            <div class="drawer-sub-item" data-dock-tab="feed"><span class="sub-dot"></span><span>好友圈实时动态</span></div>
+            <div class="drawer-sub-item" data-dock-tab="chars"><span class="sub-dot"></span><span>角色库管理中心</span></div>
+            <div class="drawer-sub-item" data-dock-tab="masks"><span class="sub-dot"></span><span>用户面具与身份</span></div>
+            <div class="drawer-sub-item" data-dock-tab="themes"><span class="sub-dot"></span><span>壁纸与微质感美化</span></div>
+            <div class="drawer-sub-item" data-dock-tab="wallet"><span class="sub-dot"></span><span>资产与数字钱包</span></div>
+            <div class="drawer-sub-item" data-dock-tab="favorites"><span class="sub-dot"></span><span>灵感与星标收藏</span></div>
+            <div class="drawer-sub-item" data-dock-tab="shop"><span class="sub-dot"></span><span>道具与潮品购物</span></div>
+            <div class="drawer-sub-item" data-dock-tab="chat-settings"><span class="sub-dot"></span><span>Chat 对话专属配置</span></div>
+          </div>
+        </div>
+
+        <!-- 2. World Book (世界书) -->
+        <div class="drawer-app-item" data-app="worldbook">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </span>
+              <span class="drawer-app-name">World Book</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>世界观核心设定集</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>角色背景与世界条目</span></div>
+          </div>
+        </div>
+
+        <!-- 3. SMS Messages (短信) -->
+        <div class="drawer-app-item" data-app="sms">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </span>
+              <span class="drawer-app-name">SMS Messages</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>未读快捷短信流</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>系统通知与验证码</span></div>
+          </div>
+        </div>
+
+        <!-- 4. Social Feed (社交) -->
+        <div class="drawer-app-item" data-app="social">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              </span>
+              <span class="drawer-app-name">Social Feed</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>好友圈实时动态</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>广场热点发现</span></div>
+          </div>
+        </div>
+
+        <!-- 5. Theme Studio (系统美化) -->
+        <div class="drawer-app-item" data-app="app-theme">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 0 0 7 7c0 2-2 3-2 3"/></svg>
+              </span>
+              <span class="drawer-app-name">Theme Studio</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>壁纸与微质感滤镜</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>全站配色与字体定制</span></div>
+          </div>
+        </div>
+
+        <!-- 6. System Settings (手机全局设置) -->
+        <div class="drawer-app-item" data-app="app-settings">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </span>
+              <span class="drawer-app-name">System Settings</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>SakuraOS 系统偏好</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>IndexedDB 存储与无损备份</span></div>
+          </div>
+        </div>
+
+        <!-- 7. Diary & Notes (日记) -->
+        <div class="drawer-app-item" data-app="diary">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </span>
+              <span class="drawer-app-name">Diary & Notes</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>日常私密手记</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>心情手账与便签</span></div>
+          </div>
+        </div>
+
+        <!-- 8. Lofter World (老福特) -->
+        <div class="drawer-app-item" data-app="lofter">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </span>
+              <span class="drawer-app-name">Lofter World</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>同人粮仓专区</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>同好标签与订阅</span></div>
+          </div>
+        </div>
+
+        <!-- 9. Listen Music (音乐) -->
+        <div class="drawer-app-item" data-app="music">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="drawer-app-name">Listen Music</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>主播放室 · 有我呢</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>晚安电台 · 专属音频</span></div>
+          </div>
+        </div>
+
+        <!-- 10. Phone Check (查手机) -->
+        <div class="drawer-app-item" data-app="checkphone">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </span>
+              <span class="drawer-app-name">Phone Check</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>对方手机相册与备忘录</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>通话记录与秘密浏览</span></div>
+          </div>
+        </div>
+
+        <!-- 11. Open World (大世界) -->
+        <div class="drawer-app-item" data-app="openworld">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </span>
+              <span class="drawer-app-name">Open World</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>沙盒大地图探索</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>实时偶遇与奇遇事件</span></div>
+          </div>
+        </div>
+
+        <!-- 12. Idle Fish (闲鱼) -->
+        <div class="drawer-app-item" data-app="idlefish">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+              </span>
+              <span class="drawer-app-name">Idle Fish</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>二手小铺 · 闲置物品</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>求购悬赏集市</span></div>
+          </div>
+        </div>
+
+        <!-- 13. You Know It (你懂得) -->
+        <div class="drawer-app-item" data-app="youknow">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </span>
+              <span class="drawer-app-name">You Know It</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>私密保险箱 · 隐藏动态</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>加密相册与日记</span></div>
+          </div>
+        </div>
+
+        <!-- 14. Lovers House (恋人之家) -->
+        <div class="drawer-app-item" data-app="lovershouse">
+          <div class="drawer-app-header">
+            <div class="drawer-app-left">
+              <span class="drawer-app-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </span>
+              <span class="drawer-app-name">Lovers House</span>
+            </div>
+            <span class="drawer-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="drawer-sub-menu">
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>双人小屋 · 亲密装扮</span></div>
+            <div class="drawer-sub-item"><span class="sub-dot"></span><span>心愿清单与纪念册</span></div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="js/dock.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/drawer.js"></script>
+</body>
+</html>
